@@ -31,10 +31,42 @@ function App() {
     // Single amount
     const [amount, setAmount] = useState('')
 
+    const [alert, setAlert] = useState({show: false})
+
     /****Functionality****/
     const handleCharge = (e) => {
         console.log(`charge = ${e.target.value}`)
         setCharge(e.target.value)
+    }
+
+    const handleAlert = ({type, text}) => {
+        setAlert({
+            show: true,
+            type,
+            text
+        })
+        setTimeout(()=> {
+            setAlert({show: false})
+        }, 3000)
+    }
+
+    const clearItems = () => {
+        //console.log('Clear')
+        setExpenses([])
+        handleAlert({ type: "danger", text: "all items deleted"})
+    }
+
+    const handleDelete = (id) => {
+        //console.log('Delete')
+        let tempExpenses = expenses.filter((item) => {
+            return id !== item.id
+        })
+        setExpenses(tempExpenses)
+        handleAlert({ type: "danger", text: "item deleted"})
+    }
+
+    const handleEdit = (id) => {
+        console.log('Edit')
     }
 
     const handleAmount = (e) => {
@@ -51,17 +83,23 @@ function App() {
                 amount: amount
             }
             setExpenses([...expenses, singleExpense])
+            handleAlert({type:'success', text: 'item added'})
+            // reset values
             setCharge("")
             setAmount("")
         } else {
             // handle alert called
+            handleAlert({
+                type: 'danger',
+                text: `Expense field cannot be empty and Amount must be greater than 0`
+            })
         }
     }
 
 
     return (
         <>
-            <Alert />
+            {alert.show &&  <Alert type={alert.type} text={alert.text}/> }
             <h1>budget calculator</h1>
             <main className="App">
                 <ExpenseForm 
@@ -71,7 +109,12 @@ function App() {
                     handleAmount={handleAmount}
                     handleSubmit={handleSubmit}
                 />
-                <ExpenseList expenses={expenses}/>
+                <ExpenseList 
+                    expenses={expenses}
+                    handleDelete={handleDelete}
+                    clearItems={clearItems}
+                    handleEdit={handleEdit}
+                />
             </main>
             <h1>
                 total expenses: <span className="total">
