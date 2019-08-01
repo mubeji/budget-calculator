@@ -6,7 +6,8 @@ const ExpenseForm = ({
         amount,
         handleAmount,
         handleSubmit,
-        handleCharge
+        handleCharge,
+        edit
     }) => {
 
 
@@ -19,25 +20,25 @@ const ExpenseForm = ({
                         className="form-control" 
                         id="charge"
                         name="charge"
-                        placeholder="e.g. rent"
+                        placeholder="Enter expense, e.g. rent"
                         value={charge}
                         onChange={handleCharge}
                     />
                 </div>
                 <div className="form-group">
                     <label htmlFor="amount">amount</label>
-                    <input type="text" 
+                    <input type="number" 
                         className="form-control" 
                         id="amount"
                         name="amount"
-                        placeholder="e.g. 100"
+                        placeholder="Enter amount e.g. 100"
                         value={amount}
                         onChange={handleAmount}
                     />
                 </div>
             </div>
             <button type="submit" className="btn">
-                submit
+                {edit ? "edit" : "submit"}
                 <MdSend className="btn-icon" />
             </button>
         </form>

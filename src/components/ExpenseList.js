@@ -8,6 +8,7 @@ const ExpenseList = ({
     handleDelete,
     clearItems
 }) => {
+    //console.log(expenses)
     return (
         <>
             <ul className="list">

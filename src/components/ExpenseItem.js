@@ -5,7 +5,9 @@ import {MdEdit, MdDelete} from 'react-icons/md'
 const ExpenseItem = ({ expense, handleEdit, handleDelete }) => {
 
     const {id, charge, amount} = expense
+    //console.log("charge: ",charge)
     return (
+        
         <li className="item">
             <div className="info">
                 <span className="expense">{charge}</span>
