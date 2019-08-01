@@ -8,7 +8,7 @@ const ExpenseItem = ({ expense }) => {
     return (
         <li className="item">
             <div className="info">
-                <span className="expenses">{charge}</span>
+                <span className="expense">{charge}</span>
                 <span className="amount">${amount}</span>
             </div>
             <div>

@@ -23,22 +23,60 @@ function App() {
     // console.log(expenses)
     // console.log(setExpenses)
 
-    // Create 2 variable state value and set (function that controls the state), 
+    // Create variables state value and set() (function that controls the state), 
     // using array destracturing, position 0 and 1 in the array
     const [expenses, setExpenses] = useState(initialExpenses)
+    // Single expense
+    const [charge, setCharge] = useState('') //value set to empty string by default
+    // Single amount
+    const [amount, setAmount] = useState('')
+
+    /****Functionality****/
+    const handleCharge = (e) => {
+        console.log(`charge = ${e.target.value}`)
+        setCharge(e.target.value)
+    }
+
+    const handleAmount = (e) => {
+        setAmount(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (charge !== "" && amount > 0) {
+
+            const singleExpense = { 
+                id: uuid(),
+                charge: charge,
+                amount: amount
+            }
+            setExpenses([...expenses, singleExpense])
+            setCharge("")
+            setAmount("")
+        } else {
+            // handle alert called
+        }
+    }
+
 
     return (
         <>
             <Alert />
             <h1>budget calculator</h1>
             <main className="App">
-                <ExpenseForm />
+                <ExpenseForm 
+                    charge={charge} 
+                    amount={amount}
+                    handleCharge={handleCharge}
+                    handleAmount={handleAmount}
+                    handleSubmit={handleSubmit}
+                />
                 <ExpenseList expenses={expenses}/>
             </main>
             <h1>
                 total expenses: <span className="total">
                     $ {expenses.reduce((acc, crr)=> {
-                        return (acc + crr.amount)
+                        return (acc + parseInt(crr.amount))
                     },0)}
                 </span>
             </h1>
